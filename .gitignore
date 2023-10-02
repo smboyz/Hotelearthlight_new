@@ -1,0 +1,73 @@
+# Ignore compiled Python files
+*.pyc
+
+# Ignore SQLite database
+/backend/db.sqlite3
+
+# Ignore macOS Finder metadata files
+.DS_Store
+
+# Ignore environment variables file
+.env
+
+# Ignore local settings file
+**/settings/local.py
+
+# Ignore static and media files (adjust these patterns if necessary)
+/staticfiles/*
+/mediafiles/*
+
+# Ignore Python bytecode cache
+__pycache__/
+
+# Ignore Visual Studio Code settings (adjust as needed)
+/.vscode/
+
+# Ignore code coverage results
+.coverage
+/coverage/
+
+# Ignore PyCharm settings (adjust as needed)
+.idea/
+
+# Ignore database dumps
+*.dump
+
+# Ignore npm-related files
+node_modules/
+npm-debug.log
+
+# Ignore Webpack-related files
+/frontend/bundles/*
+/frontend/webpack_bundles/*
+/webpack-stats.json
+
+# Ignore Sass cache and map files
+.sass-cache
+*.map
+
+# Ignore virtual environment directories
+/{{project_name}}-venv/
+/venv/
+/env/
+
+# Ignore output and cache directories
+/output/
+/cache/
+
+# Ignore boilerplate zip files
+boilerplate.zip
+
+# Ignore Spritesmith-generated files
+spritesmith-generated/
+spritesmith.scss
+
+# Ignore templated email files
+tmp_email/
+
+# Ignore direnv configuration
+.direnv
+.envrc
+
+# Ignore tool-versions file
+.tool-versions

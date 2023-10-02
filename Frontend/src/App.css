@@ -1,0 +1,31 @@
+.ReactModalPortal{
+  position: absolute;
+  z-index: 200;
+}
+.custom-flex{
+  display: flex !important;
+}
+.custom-animation{
+  animation: motion 6s linear infinite;
+}
+@keyframes motion {
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.1);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+.slick-prev, .slick-next {
+  display: none !important;
+}
+
+.my-datetime-class .rdtPlaceholder {
+  color: #000 !important;
+}
+.ReactModal__Overlay{
+  background: none !important;
+}
