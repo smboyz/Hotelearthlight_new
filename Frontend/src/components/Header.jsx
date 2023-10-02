@@ -42,7 +42,7 @@ const Header = () => {
         // Axios GET request to fetch data
         headerData();
     }, []);
-    console.log(data);
+    // console.log(data);
 
     const location = useLocation();
     useEffect(() => {

@@ -48,13 +48,12 @@ class Comment(models.Model):
 
 class Navigation(models.Model):
     PAGE_TYPE = (
-        ('Home', 'Home'),('Slider','Slider'),('Home/About', 'Home/About'),('Features', 'Features'),
-        ('Features_1', 'Features_1'),('Home/Video', 'Home/Video'),('Aboutus', 'Aboutus'),('Aboutus_1', 'Aboutus_1'),
-        ('Achievements', 'Achievements'),('Achievements_1', 'Achievements_1'),('Testimonials', 'Testimonials'),
-        ('Blog','Blog'),('Services', 'Services'),('Vision','Vision'),('Mission','Mission'),
-        ('Objectives','Objectives'),('Our Strength','Our Strength'),('Research & Development','Research & Development'),
-        ('Video_Gallery', 'Video_Gallery'),('Gallery', 'Gallery'),('Image_Gallery', 'Image_Gallery'),
-        ('Contact', 'Contact'),('Group', 'Group'),('Video', 'Video'),('Blog_1','Blog_1'),('Services_1', 'Services_1'),
+        ('Home', 'Home'),('Slider','Slider'),('Home/About', 'Home/About'),('Safari', 'Safari'),
+        ('Reviews', 'Reviews'),('About', 'About'),('Achievements', 'Achievements'),('Services', 'Services'),
+        ('Services_1', 'Services_1'),('Features','Features'),('Rooms & Suites','Rooms & Suites'),
+        ('Rooms & Suites_1','Rooms & Suites_1'),('Video_Gallery', 'Video_Gallery'),
+        ('Video_Gallery_1', 'Video_Gallery_1'),('Image_Gallery', 'Image_Gallery'),
+        ('Image_Gallery_1', 'Image_Gallery_1'),('Contact', 'Contact'),('Group', 'Group'),('Reviews_1', 'Reviews_1'),
     )
 
     STATUS = (
@@ -76,7 +75,7 @@ class Navigation(models.Model):
     slider_image = models.ImageField(upload_to="about/", null=True)
     Parent = models.ForeignKey('self', related_name="childs", on_delete=models.CASCADE, null=True, blank=True)
     brochure = models.FileField(upload_to="brochure/",null=True)
-    date = models.DateField(auto_now_add=True, null=True)
+    date = models.DateField(default="2012-12-12", null=True)
     image = models.ImageField(upload_to="about/",null=True)
     video = models.FileField(upload_to="video/%y", null=True)
 
