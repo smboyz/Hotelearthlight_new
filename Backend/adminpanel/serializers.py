@@ -19,7 +19,7 @@ class NavigationSerializer(ModelSerializer):
 class ContactSerializer(ModelSerializer):
   class Meta:
     model = ContactUS
-    fields = ['name', 'mobileno', 'email', 'subject', 'message']
+    fields = ['name', 'mobileno', 'email', 'message']
 
 class CommentSerializer(ModelSerializer):
   class Meta:

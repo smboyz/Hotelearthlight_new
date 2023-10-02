@@ -29,7 +29,6 @@ class ContactUS(models.Model):
     name = models.CharField(max_length=50)
     mobileno = models.CharField(max_length=50,null=True)
     email = models.CharField(max_length=50)
-    subject = models.CharField(max_length=50)
     message = models.TextField(null=True)
     
     def __str__(self):

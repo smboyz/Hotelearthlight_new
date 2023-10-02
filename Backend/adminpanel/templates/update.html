@@ -227,7 +227,8 @@
                                                                             {% if data.page_type == "Contact" %}selected="selected"{% endif %}>
                                                                         Contact
                                                                     </option>
-                                                                    <option value="Reviews_1" {% if data.page_type == "Reviews_1" %}selected="selected"{% endif %}>
+                                                                    <option value="Reviews_1"
+                                                                            {% if data.page_type == "Reviews_1" %}selected="selected"{% endif %}>
                                                                         Reviews_1
                                                                     </option>
                                                                     {% comment %} <option value="UNSKILLED" {% if data.page_type == "UNSKILLED" %}selected="selected"{% endif %}>
@@ -429,7 +430,7 @@
                                                             </div>
                                                             <div class="col-6 mt-5">
                                                                 <div class="col-12 p-2">
-                                                                    <label>Icon Image</label>
+                                                                    <label>Title 2</label>
                                                                 </div>
                                                                 <div class="col-8">
                                                                     <input type="text" name="icon_image" value="{{ data.icon_image }}">

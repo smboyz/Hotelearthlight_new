@@ -256,13 +256,14 @@ def navigation_list(request, parent_id=None):
             meta_keyword=meta_keyword,
             desc=desc,
             icon_image=icon_image,
-            date = date,
             image = image,
             Parent=parent_navigation,  # Assign parent navigation object
         )
         # obj.Parent = Navigation.objects.filter(id=parent_id)
 
         # Set uploaded images
+        if date:
+            obj.date=date
         if bannerimage:
             obj.bannerimage = bannerimage
         if slider_image:
@@ -330,11 +331,13 @@ def update(request, pk):
         data.desc = desc
         data.Parent=parent_navigation
         data.icon_image=icon_image
-        data.date=date
         
 
         if bannerimage:
             data.bannerimage = bannerimage
+
+        if date:
+            data.date=date
 
         if slider_image:
             data.slider_image = slider_image
