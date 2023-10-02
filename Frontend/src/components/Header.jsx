@@ -1,11 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const Header = () => {
     const [scrolled, setScrolled] = useState(false);
     const [galleryMenu, setGalleryMenu] = useState(false);
     const [activeBlock, setActiveBlock] = useState(0);
     const [showNavbar, setShowNavbar] = useState(false);
+
+    const [data, setData] = useState();
+
+    const headerData = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:8000/api/globals/');
+            // Handle the response data here
+            response.data && setData(response.data[0]);
+
+            // Fetch navigation data based on parentId and page_type
+            // const navigationResponse = await axios.get(
+            //     "http://127.0.0.1:8000/api/navigations/",
+            //     {
+            //         params: {
+            //             parent_id: parentId,      // Set the parentId as a parameter
+            //             page_type: "Group",       // Filter by page_type        
+            //         }
+            //     }
+            // );
+
+            // if (navigationResponse.data) {
+            //     const navigationData = navigationResponse.data.filter(
+            //         (item) => item.status === "Publish"
+            //     );
+            //     setNavigation(navigationData);
+            // }
+        }
+        catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+    useEffect(() => {
+        // Axios GET request to fetch data
+        headerData();
+    }, []);
+    console.log(data);
 
     const location = useLocation();
     useEffect(() => {
@@ -59,12 +96,13 @@ const Header = () => {
     const closeNav = () => {
         setShowNavbar(false);
     }
+
     return (
         <header className={`bg-white fixed top-0 left-0 w-full py-2 z-[100] ${scrolled ? 'shadow-[0_0_10px_2px_rgba(0,0,0,0.2)] bg-opacity-100' : 'bg-opacity-80'}`}>
             <div className="container flex items-center justify-between">
                 <div className='sm:w-[150px] w-[90px]'>
                     <NavLink to="/">
-                        <img className='w-full' src="/src/assets/images/logo.png" alt="logo" />
+                        <img className='w-full' src={data && data.logo} alt="logo" />
                     </NavLink>
                 </div>
                 <div className={`lg:block lg:static absolute sm:top-[87px] top-[59px] right-0 lg:p-0 p-4 lg:w-auto lg:opacity-100 lg:bg-transparent bg-orange-500 lg:text-black text-white lg:transition-none transition-all duration-[0.4s] ease-linear ${showNavbar ? 'w-[200px] opacity-100' : 'w-0 opacity-0'} `}>

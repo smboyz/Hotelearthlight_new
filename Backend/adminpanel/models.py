@@ -17,6 +17,7 @@ class GlobalSettings(models.Model):
     SiteBox = models.CharField(max_length=300,null=True)
     logo = models.ImageField(upload_to="Global/",max_length=200, null=True, default=None)
     back_image = models.ImageField(upload_to="Global/",null=True)
+    qr_code = models.ImageField(upload_to="QRCODE/",null=True)
     brochure = models.FileField(upload_to="brochure/",null=True)
     brochure_name = models.CharField(max_length=100,null=True)
 

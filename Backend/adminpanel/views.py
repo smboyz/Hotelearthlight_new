@@ -75,6 +75,7 @@ def globalsetting(request):
         fax = request.POST.get('fax')
         brochure_name = request.POST.get('brochure_name')
         box = request.POST.get('box')
+        qr_code = request.FILES.get('qr_code')
 
 
         if data is None:
@@ -99,6 +100,7 @@ def globalsetting(request):
             data.Sitefax = fax
             data.SiteBox = box
             data.brochure_name = brochure_name
+            data.qr_code = qr_code
 
         if logo:
             # Set the uploaded image to the 'logo' field
@@ -106,8 +108,12 @@ def globalsetting(request):
         if brochure:
             # Set the uploaded image to the 'logo' field
             data.brochure = brochure
+
         if back_image:
             data.back_image = back_image
+        
+        if qr_code:
+            data.qr_code = qr_code
         
         data.save()
 

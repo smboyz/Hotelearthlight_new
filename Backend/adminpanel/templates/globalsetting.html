@@ -128,6 +128,13 @@
                         {% endif %}
                       </div>
                       <div class="form-group">
+                        <label class="col-2 p-2">QR Code:</label>
+                        <input type="file" name="qr_code">
+                        {% if data.qr_code %}
+                          <img src="{{ data.qr_code.url }}" style="max-width: 20%; height: auto">
+                        {% endif %}
+                      </div>
+                      <div class="form-group">
                         <label class="col-2 p-2">Background Image:</label>
                         <input type="file" name="back_image">
                         {% if data.back_image %}

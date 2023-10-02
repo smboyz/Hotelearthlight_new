@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import ModalImage from "react-modal-image";
+import axios from 'axios';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [data, setData] = useState();
+
+  const headerData = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/globals/');
+      // Handle the response data here
+      response.data && setData(response.data[0]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+  useEffect(() => {
+    // Axios GET request to fetch data
+    headerData();
+  }, []);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -19,8 +35,8 @@ const Footer = () => {
     <footer className='bg-black text-white text-sm bg-opacity-90'>
       <div className="container grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 py-4">
         <div className='w-full'>
-          <img className='w-2/5' src="/src/assets/images/logo.png" alt="logo" />
-          <p className='mt-2'>Hotel Earth Light Sauraha located in Chitwan National Park. Uniquely designed universally accessed classical villas offers an outstanding comfort and tranquility where one can undoubtedly feel staying in a palace.</p>
+          <img className='w-2/5' src={data && data.logo} alt="logo" />
+          <p className='mt-2'>{data && data.Sitedescription}</p>
         </div>
         <div className='flex flex-col lg:items-center items-start w-full'>
           <div className='xl:w-1/2 lg:w-full'>
@@ -40,14 +56,14 @@ const Footer = () => {
         <div className='flex flex-col items-start w-full'>
           <h2 className='sm:text-xl text-lg font-medium text-orange-500 mb-2'>Contact Us</h2>
           <div className='flex flex-col gap-1 items-start'>
-            <span className='flex items-center gap-1'><i className="fa-solid fa-location-dot"></i>Baghamara, Sauraha Chitwan National Park, Nepal</span>
-            <span className='flex items-center gap-1'><i className="fa-solid fa-phone"></i><a href="tel:+977-56580454"> +977-56580454,</a><a href="tel:9851126312">9851126312</a></span>
-            <span className='flex items-center gap-1'><i className="fa-solid fa-envelope"></i><a href="mailto:reservation@hotelearthlight.com">reservation@hotelearthlight.com</a></span>
+            <span className='flex items-center gap-1'><i className="fa-solid fa-location-dot"></i>{data && data.SiteAddress}</span>
+            <span className='flex items-center gap-1'><i className="fa-solid fa-phone"></i><a href="tel:+977-56580454">{data && data.SiteContact},</a><a href="tel:9851126312">{data && data.Sitefax}</a></span>
+            <span className='flex items-center gap-1'><i className="fa-solid fa-envelope"></i><a href="mailto:reservation@hotelearthlight.com">{data && data.SiteEmail}</a></span>
           </div>
           <div className='flex items-center gap-2 mt-3 h-auto'>
-            <a href="#" className='w-[30px] h-[30px] flex items-center justify-center text-white rounded-full bg-emerald-500 transition-all duration-100 ease-linear hover:h-[35px] hover:w-[35px]'><i className="fa-brands fa-facebook-f"></i></a>
-            <a href="#" className='w-[30px] h-[30px] flex items-center justify-center text-white rounded-full bg-emerald-500 transition-all duration-100 ease-linear hover:h-[35px] hover:w-[35px]'><i className="fa-brands fa-instagram"></i></a>
-            <a href="#" className='w-[30px] h-[30px] flex items-center justify-center text-white rounded-full bg-emerald-500 transition-all duration-100 ease-linear hover:h-[35px] hover:w-[35px]'><i className="fa-brands fa-twitter"></i></a>
+            <a href={data && data.Sitefacebooklink} className='w-[30px] h-[30px] flex items-center justify-center text-white rounded-full bg-emerald-500 transition-all duration-100 ease-linear hover:h-[35px] hover:w-[35px]'><i className="fa-brands fa-facebook-f"></i></a>
+            <a href={data && data.Siteinstagram} className='w-[30px] h-[30px] flex items-center justify-center text-white rounded-full bg-emerald-500 transition-all duration-100 ease-linear hover:h-[35px] hover:w-[35px]'><i className="fa-brands fa-instagram"></i></a>
+            <a href={data && data.Sitetwitterlink} className='w-[30px] h-[30px] flex items-center justify-center text-white rounded-full bg-emerald-500 transition-all duration-100 ease-linear hover:h-[35px] hover:w-[35px]'><i className="fa-brands fa-twitter"></i></a>
           </div>
         </div>
         <div className='w-full'>
@@ -63,7 +79,7 @@ const Footer = () => {
           <p id="confirmation-message">{confirmationMessage}</p>
           <div className='flex items-center mt-2 w-full gap-2'>
             <h2 className='sm:text-xl text-lg font-medium text-orange-500'>QR Code:</h2>
-            <ModalImage className='w-[90px] h-[90px]' small='/src/assets/images/qr-code.png' large='/src/assets/images/qr-code.png' alt="qr code" />
+            <ModalImage className='w-[90px] h-[90px]' small={data && data.qr_code} large={data && data.qr_code} alt="qr code" />
           </div>
         </div>
       </div>
