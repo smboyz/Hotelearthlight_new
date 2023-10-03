@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import GlobalSettings, ContactUS, Navigation, BookRoom
+from .models import GlobalSettings, ContactUS, Navigation, BookRoom, Newsletter
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.paginator import Paginator
@@ -380,14 +380,36 @@ def delete_nav(request, pk):
     
     # return render(request, 'delete.html', {'obj': obj})
 
-# def search_results(request):
-#     glob=GlobalSettings.objects.all()
+@login_required(login_url=settings.LOGIN_URL)
+def newsletter(request):
+    glob = GlobalSettings.objects.all()
+    con = Newsletter.objects.all()
+    query = request.GET.get('q')
+    results = None
     
-#     query = request.GET.get('q')
-#     results = None
+    if query:
+        results = Newsletter.objects.filter(room_type__icontains=query)
+    
 
-#     if query:
-#         results = Apply.objects.filter(name__icontains=query)
+    dels = Newsletter.objects.all()
+    dels = dels.order_by('-id')
+    paginator = Paginator(dels, 10)  # Show 6 contacts per page.
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+ 
+    return render(request, "newslett.html",{'con':con, 'glob' : glob, 'page_obj':page_obj,'results':results})
+
+@login_required(login_url=settings.LOGIN_URL)
+def delete_news(request):
+    if request.method == "POST":
+        # Check if "selected_items" is in the POST data
+        selected_items = request.POST.getlist('selected_items[]')
         
-    
-#     return render(request, 'search.html', {'results': results, 'query': query,'glob':glob})
+        if selected_items:
+            # Loop through the selected items and delete them
+            for item_pk in selected_items:
+                con = get_object_or_404(Newsletter, pk=item_pk)
+                con.delete()
+
+    return redirect('newslett')

@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import models
 # from django.utils import timezone
 
@@ -44,6 +45,13 @@ class BookRoom(models.Model):
     
     def __str__(self):
         return self.room_type
+    
+
+class Newsletter(models.Model):
+    email = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return self.email
     
     
 

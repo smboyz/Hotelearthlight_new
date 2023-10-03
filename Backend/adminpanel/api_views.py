@@ -171,6 +171,35 @@ class BookRoom(APIView):
         serializer = BookRoomSerializer(snippet)
         return Response(serializer.data)
 
+class NewsletterViewSet(viewsets.ModelViewSet):
+    queryset = Newsletter.objects.all()
+    serializer_class = NewsletterSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        # print(request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Comment form data received'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+   
+class Newsletter(APIView):
+    """
+    Retrieve, update or delete a snippet instance.
+
+    """  
+    def get_object(self, pk):
+        try:
+            return Newsletter.objects.get(pk=pk)
+        except Newsletter.DoesNotExists:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        serializer = NewsletterSerializer(snippet)
+        return Response(serializer.data)
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

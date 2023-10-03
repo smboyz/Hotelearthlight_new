@@ -11,6 +11,7 @@ router.register(r'globals', GlobalViewSet)
 router.register(r'navigations', NavigationViewSet)
 router.register(r'contacts',ContactViewSet)
 router.register(r'bookrooms',BookRoomViewSet)
+router.register(r'newsletters',NewsletterViewSet)
 
 
 # Wire up our API using automatic URL routing.
@@ -22,6 +23,7 @@ urlpatterns = [
     path('navigation/<int:pk>',Navigation.as_view(),name='navigation'),
     path('contactUs/<int:pk>',Navigation.as_view(),name='contactUs'),
     path('bookroom/<int:pk>',Navigation.as_view(),name='bookroom'),
+    path('newsletter/<int:pk>',Navigation.as_view(),name='newsletter'),
     path('api/', include(router.urls)),
     # path('glob/',globalSettings_list),
 ]

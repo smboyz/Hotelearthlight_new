@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import GlobalSettings,Navigation,ContactUS,BookRoom
+from .models import GlobalSettings,Navigation,ContactUS,BookRoom,Newsletter
 from rest_framework.authtoken.views import Token
 
 
@@ -25,6 +25,11 @@ class BookRoomSerializer(ModelSerializer):
   class Meta:
     model = BookRoom
     fields = ['check_in', 'check_out', 'adults', 'children', 'bed_type', 'room_type']
+
+class NewsletterSerializer(ModelSerializer):
+  class Meta:
+    model = Newsletter
+    fields = ['email']
     
 class UserSerializer(serializers.ModelSerializer):
       class Meta :
