@@ -61,8 +61,8 @@ const Review = () => {
         // Axios GET request to fetch data
         HomeData();
     }, []);
-    console.log(view)
-    console.log(view_1)
+    // console.log(view)
+    // console.log(view_1)
 
     return (
         <section className='py-10 relative mb-4'>

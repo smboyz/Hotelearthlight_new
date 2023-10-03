@@ -1,28 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import GalleryData from '../../data/GalleryData';
 import ImageModal from './ImageModal';
+import axios from 'axios';
 
 const ImageGallery = () => {
+
+    const [gall, setGall] = useState();
+    const [gall_1, setGall_1] = useState();
+
+    const HomeData = async () => {
+        try {
+            const response = await axios.get(
+                "http://127.0.0.1:8000/api/navigations/"
+            );
+            // Filter the response data by status and page_type
+            if (response.data) {
+                const gallData = response.data.filter(
+                    (item) => item.status === "Publish" && item.page_type === "Image_Gallery"
+                );
+                setGall(gallData[0]); // Assuming you want to slice the filtered data
+            }
+
+            if (response.data) {
+                const gall_1Data = response.data.filter(
+                    (item) => item.status === "Publish" && item.page_type === "Image_Gallery_1"
+                );
+                setGall_1(gall_1Data); // Assuming you want to slice the filtered data
+            }
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    useEffect(() => {
+        // Axios GET request to fetch data
+        HomeData();
+    }, []);
+    // console.log(gall_1);
+
     return (
         <>
             <section className='h-[350px] relative'>
-                <img className='absolute h-full w-full inset-0 object-cover' src="/src/assets/images/contact-bg.webp" alt="background" />
+                <img className='absolute h-full w-full inset-0 object-cover' src={gall && gall.slider_image} alt="background" />
                 <div className='absolute h-full w-full inset-0 bg-black opacity-60'></div>
                 <div className='container text-white relative z-20 flex flex-col items-center justify-center h-full w-full'>
-                    <h1 className='lg:text-4xl md:text-3xl text-2xl font-semibold md:mt-[78px] mt-[40px] text-center'>Hotel Earth Light</h1>
+                    <h1 className='lg:text-4xl md:text-3xl text-2xl font-semibold md:mt-[78px] mt-[40px] text-center'>{gall && gall.caption}</h1>
                     <span className='flex text-lg text-gray-100'>
                         <NavLink to="/" className="relative px-2 after:absolute after:content-[''] after:h-[80%] after:top-[10%] after:w-[1px] after:bg-gray-100 after:right-0 hover:text-yellow-500">Home</NavLink>
-                        <p className='px-2'>Image Gallery</p>
+                        <p className='px-2'>{gall && gall.name}</p>
                     </span>
                 </div>
             </section>
             <section className="py-10">
                 <div className="container flex flex-col items-center">
-                    <h2 className='text-2xl font-bold text-orange-500 mb-6'>Image Gallery</h2>
+                    <h2 className='text-2xl font-bold text-orange-500 mb-6'>{gall && gall.name}</h2>
                     <div className='grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4'>
-                        {GalleryData.map((imageItem, index) => (
-                            <ImageModal key={imageItem.id} imageUrl={imageItem.imageUrl} images={GalleryData} index={index} />
+                        {gall_1 && gall_1.map((imageItem, index) => (
+                            <ImageModal key={imageItem.id} imageUrl={imageItem.bannerimage} images={gall_1} index={index} />
                         ))}
                     </div>
                     <nav className="flex items-center space-x-2">
