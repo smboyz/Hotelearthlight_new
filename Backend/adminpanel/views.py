@@ -162,14 +162,14 @@ def delete_contact(request):
 
     # return redirect('contactus')
 
-def BookRoom(request):
+def Bookroom(request):
     glob = GlobalSettings.objects.all()
-    con=BookRoom.objects.all()
+    con = BookRoom.objects.all()
     query = request.GET.get('q')
     results = None
     
     if query:
-        results = BookRoom.objects.filter(name__icontains=query)
+        results = BookRoom.objects.filter(room_type__icontains=query)
     
 
     dels = BookRoom.objects.all()
@@ -179,7 +179,7 @@ def BookRoom(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
  
-    return render(request, "Comment.html",{'con':con, 'glob' : glob, 'page_obj':page_obj,'results':results})
+    return render(request, "bookrooms.html",{'con':con, 'glob' : glob, 'page_obj':page_obj,'results':results})
 
 @login_required(login_url=settings.LOGIN_URL)
 def delete_BookRoom(request):
@@ -193,7 +193,7 @@ def delete_BookRoom(request):
                 con = get_object_or_404(BookRoom, pk=item_pk)
                 con.delete()
 
-    return redirect('comment')
+    return redirect('bookrooms')
 
 @login_required(login_url=settings.LOGIN_URL)
 def main_navigation(request, parent_id=None):

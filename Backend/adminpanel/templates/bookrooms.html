@@ -3,7 +3,7 @@
 {% block content %}
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <div class="container">
-      <form action="{% url 'comment' %}"
+      <form action="{% url 'bookrooms' %}"
             method="GET"
             class="my-2 d-flex justify-content-end">
         <div class="input-group col-4">
@@ -24,7 +24,7 @@
          navbar-scroll="true">
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
-          <h6 class="font-weight-bolder mb-0">Post Comment</h6>
+          <h6 class="font-weight-bolder mb-0">Book Room</h6>
         </nav>
       </div>
     </nav>
@@ -41,7 +41,7 @@
             <div class="container-fluid py-4">
               <div class="card-body px-0 pb-2">
                 <div class="table-responsive p-0">
-                  <form id="deleteForm" method="POST" action="{% url 'delete_comment' %}">
+                  <form id="deleteForm" method="POST" action="{% url 'delete_BookRoom' %}">
                     {% csrf_token %}
                     <tr>
                       <th>
@@ -55,10 +55,12 @@
                         <tr>
                           <th>Select</th>
                           <th>S.N</th>
-                          <th>Name</th>
-                          <th>Mobile No</th>
-                          <th>Email</th>
-                          <th>Message</th>
+                          <th>check_in</th>
+                          <th>check_out</th>
+                          <th>adults</th>
+                          <th>children</th>
+                          <th>bed_type</th>
+                          <th>room_type</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -68,10 +70,12 @@
                               <input type="checkbox" name="selected_items[]" value="{{ cons.pk }}">
                             </td>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ cons.name }}</td>
-                            <td>{{ cons.mobileno }}</td>
-                            <td>{{ cons.email }}</td>
-                            <td>{{ cons.message }}</td>
+                            <td>{{ cons.check_in }}</td>
+                            <td>{{ cons.check_out }}</td>
+                            <td>{{ cons.adults }}</td>
+                            <td>{{ cons.children }}</td>
+                            <td>{{ cons.bed_type }}</td>
+                            <td>{{ cons.room_type }}</td>
                           </tr>
                         {% endfor %}
                       </tbody>
@@ -81,10 +85,12 @@
                         <tr>
                           <th>Select</th>
                           <th>S.N</th>
-                          <th>Name</th>
-                          <th>Mobile No</th>
-                          <th>Email</th>
-                          <th>Message</th>
+                          <th>check_in</th>
+                          <th>check_out</th>
+                          <th>adults</th>
+                          <th>children</th>
+                          <th>bed_type</th>
+                          <th>room_type</th>
                         </tr>
                         {% for cons in results %}
                           <tr>
@@ -92,10 +98,12 @@
                               <input type="checkbox" name="selected_items[]" value="{{ cons.pk }}">
                             </td>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ cons.name }}</td>
-                            <td>{{ cons.mobileno }}</td>
-                            <td>{{ cons.email }}</td>
-                            <td>{{ cons.message }}</td>
+                            <td>{{ cons.check_in }}</td>
+                            <td>{{ cons.check_out }}</td>
+                            <td>{{ cons.adults }}</td>
+                            <td>{{ cons.children }}</td>
+                            <td>{{ cons.bed_type }}</td>
+                            <td>{{ cons.room_type }}</td>
                           </tr>
                           {% comment %} <form method="POST" action="{% url 'delete' pk=cons.pk %}">
                                 {% csrf_token %}

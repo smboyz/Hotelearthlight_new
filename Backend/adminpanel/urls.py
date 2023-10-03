@@ -15,7 +15,7 @@ urlpatterns = [
     path("navigation/<int:parent_id>/", navigation_list, name="navigation"),
     path("update/<int:pk>/", update, name="update"),
     path("delete_nav/<int:pk>/", delete_nav, name="delete_nav"),
-    path("BookRoom/", BookRoom, name="BookRoom"),
+    path("bookrooms/", Bookroom, name="bookrooms"),
     path("delete_BookRoom/", delete_BookRoom, name="delete_BookRoom"),
     # path('search/', search_results, name='search')
 ]
