@@ -34,14 +34,16 @@ class ContactUS(models.Model):
     def __str__(self):
         return self.name
     
-class Comment(models.Model):
-    name = models.CharField(max_length=50)
-    mobileno = models.CharField(max_length=50,null=True)
-    email = models.CharField(max_length=50)
-    message = models.TextField(null=True)
+class BookRoom(models.Model):
+    check_in = models.CharField(max_length=50,null=True)
+    check_out = models.CharField(max_length=50,null=True)
+    adults = models.CharField(max_length=50,null=True)
+    children = models.CharField(max_length=50,null=True)
+    bed_type = models.CharField(max_length=50,null=True)
+    room_type = models.CharField(max_length=50,null=True)
     
     def __str__(self):
-        return self.name
+        return self.room_type
     
     
 
@@ -50,9 +52,10 @@ class Navigation(models.Model):
         ('Home', 'Home'),('Slider','Slider'),('Home/About', 'Home/About'),('Safari', 'Safari'),
         ('Reviews', 'Reviews'),('About', 'About'),('Achievements', 'Achievements'),('Services', 'Services'),
         ('Services_1', 'Services_1'),('Features','Features'),('Rooms & Suites','Rooms & Suites'),
-        ('Rooms & Suites_1','Rooms & Suites_1'),('Video_Gallery', 'Video_Gallery'),
-        ('Video_Gallery_1', 'Video_Gallery_1'),('Image_Gallery', 'Image_Gallery'),
+        ('Rooms & Suites_1','Rooms & Suites_1'),('Video_Gallery', 'Video_Gallery'),('Features_1','Features_1'),
+        ('Video_Gallery_1', 'Video_Gallery_1'),('Image_Gallery', 'Image_Gallery'),('Features_2','Features_2'),
         ('Image_Gallery_1', 'Image_Gallery_1'),('Contact', 'Contact'),('Group', 'Group'),('Reviews_1', 'Reviews_1'),
+        ('Features_3','Features_3')
     )
 
     STATUS = (

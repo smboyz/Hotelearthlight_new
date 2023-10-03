@@ -141,9 +141,9 @@ class contactUS(APIView):
         return Response(serializer.data)
 
 
-class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
+class BookRoomViewSet(viewsets.ModelViewSet):
+    queryset = BookRoom.objects.all()
+    serializer_class = BookRoomSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -155,32 +155,20 @@ class CommentViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
    
-class comment(APIView):
+class BookRoom(APIView):
     """
     Retrieve, update or delete a snippet instance.
 
-    """
-    # def post(self,request,format=None):
-    #     data = request.data
-    #       # Example: Save the form data to the ContactUS model
-    #     comment = Comment.objects.create(
-    #         full_name=data.get('full_name'),
-    #         mobileno=data.get('mobileno'),
-    #         email=data.get('email'),
-    #         message=data.get('message')
-    #     )
-    #     # Return a response
-    #     return Response({'message': 'Comment form data received'}, status=status.HTTP_201_CREATED)
-    
+    """  
     def get_object(self, pk):
         try:
-            return Comment.objects.get(pk=pk)
-        except Comment.DoesNotExists:
+            return BookRoom.objects.get(pk=pk)
+        except BookRoom.DoesNotExists:
             raise Http404
 
     def get(self, request, pk, format=None):
         snippet = self.get_object(pk)
-        serializer = CommentSerializer(snippet)
+        serializer = BookRoomSerializer(snippet)
         return Response(serializer.data)
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import Data from '../../data/KeyFeatureData';
 
 const Feature = () => {
     return (
@@ -31,45 +32,16 @@ const Feature = () => {
                         </div>
                     </div>
                     <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-5 w-full mt-10 '>
-                        <div className='flex flex-col items-start'>
-                            <h3 className='sm:text-xl text-lg font-medium border-b-2 border-orange-500 mb-1'>Property feature services</h3>
-                            <ul className='text-gray-700 flex flex-col items-start gap-1 sm:text-base text-sm'>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Multilingual Staff</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Pet Friendly</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Porter</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Room Service</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Handicapped Facilities</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Internet access</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Safe</li>
-                            </ul>
-                        </div>
-                        <div className='flex flex-col items-start '>
-                            <h3 className='sm:text-xl text-lg font-medium border-b-2 border-orange-500 mb-1'>PROPERTY FACILITIES</h3>
-                            <ul className='text-gray-700 flex flex-col items-start gap-1 sm:text-base text-sm'>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Air conditioning</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Banquet Facility</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Bar</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Guide dogs permitted</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Handicapped Facilities</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Internet access</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Meeting Room</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Restaurant</li>
-                            </ul>
-                        </div>
-                        <div className='flex flex-col items-start'>
-                            <h3 className='sm:text-xl text-lg font-medium border-b-2 border-orange-500 mb-1'>ROOM FACILITIES</h3>
-                            <ul className='text-gray-700 flex flex-col items-start gap-1 sm:text-base text-sm'>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Air conditioning</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Bathrobe</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Bar</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Bathroom Amenities</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Free Newspaper</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Internet access</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Tea & Coffee maker</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Telephone</li>
-                                <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>Television</li>
-                            </ul>
-                        </div>
+                        {Data.map((dataItem) => (
+                            <div key={dataItem.id} className='flex flex-col items-start'>
+                                <h3 className='sm:text-xl text-lg font-medium border-b-2 border-orange-500 mb-1'>{dataItem.title}</h3>
+                                <ul className='text-gray-700 flex flex-col items-start gap-1 sm:text-base text-sm'>
+                                    {dataItem.item.map((listItem) => (
+                                        <li className='flex items-center gap-1'><i className="fa-solid fa-check"></i>{listItem}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
