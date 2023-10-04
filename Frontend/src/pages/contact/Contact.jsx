@@ -80,7 +80,7 @@ const Contact = () => {
         // Axios GET request to fetch data
         headerData();
     }, []);
-    console.log(formData)
+    // console.log(formData)
 
     return (
         <>

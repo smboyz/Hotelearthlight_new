@@ -4,9 +4,13 @@ import ModalImage from "react-modal-image";
 import axios from 'axios';
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [data, setData] = useState();
+  const [formData, setFormData] = useState({
+    email: "",
+  });
+  const [successMessage, setSuccessMessage] = useState("")
 
   const headerData = async () => {
     try {
@@ -17,20 +21,58 @@ const Footer = () => {
       console.error("Error fetching data:", error);
     }
   }
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/api/newsletters/",
+        formData
+      );
+
+      // Check if the response status is 201 Created (or another success status)
+      if (response.status === 201) {
+        // Show a success message to the user
+        setSuccessMessage("Submitted successfully!");
+
+        // Optionally, reset the form fields
+        setFormData({
+          email: "",
+        });
+      } else {
+        // Handle other status codes (e.g., 400 for validation errors)
+        console.error(
+          "Server responded with an unexpected status code:",
+          response.status
+        );
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
   useEffect(() => {
     // Axios GET request to fetch data
     headerData();
   }, []);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  // const handleEmailChange = (e) => {
+  //   setEmail(e.target.value);
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setConfirmationMessage(`Thank you for subscribing with email: ${email}`);
-    setEmail(''); // Clear the input field
-  }
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setConfirmationMessage(`Thank you for subscribing with email: ${email}`);
+  //   setEmail(''); // Clear the input field
+  // }
   return (
     <footer className='bg-black text-white text-sm bg-opacity-90'>
       <div className="container grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 py-4">
@@ -68,10 +110,15 @@ const Footer = () => {
         </div>
         <div className='w-full'>
           <h2 className='sm:text-xl text-lg font-medium text-orange-500 mb-2'>For newsletter</h2>
+          {successMessage && (
+            <div className="success-message" style={{ color: "green" }}>
+              {successMessage}
+            </div>
+          )}
           <form onSubmit={handleSubmit} className='md:w-full sm:w-2/3 w-11/12'>
             <div className='flex gap-2 bg-transparent p-2 border border-gray-200 rounded-[4px] xl:w-full md:w-2/3 w-full'>
               <div className='flex-grow'>
-                <input type="email" id="email" name="email" placeholder="Your Email" required value={email} onChange={handleEmailChange} className='focus:outline-none bg-transparent rounded-sm w-full' />
+                <input type="email" id="email" name="email" placeholder="Your Email" required value={formData.email} onChange={handleInputChange} className='focus:outline-none bg-transparent rounded-sm w-full' />
               </div>
               <button type="submit" className='px-2 py-1 bg-emerald-600 rounded-md'>Subscribe</button>
             </div>
