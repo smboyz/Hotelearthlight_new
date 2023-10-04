@@ -16,6 +16,15 @@ const RoomDetails = () => {
 
     const [room, setRoom] = useState();
     const [room_1, setRoom_1] = useState();
+    const [formData, setFormData] = useState({
+        check_in: "",
+        check_out: "",
+        adults: "",
+        children: "",
+        bed_type: "",
+        room_type: "",
+    });
+    const [successMessage, setSuccessMessage] = useState("")
 
     const HomeData = async () => {
         try {
@@ -34,7 +43,7 @@ const RoomDetails = () => {
                 const room_1Data = response.data.filter(
                     (item) => item.status === "Publish" && item.page_type === "Rooms & Suites_1"
                 );
-                setRoom_1(room_1Data.find(dataItem=> dataItem.name === name)); // Assuming you want to slice the filtered data
+                setRoom_1(room_1Data.find(dataItem => dataItem.name === name)); // Assuming you want to slice the filtered data
             }
 
         } catch (error) {
@@ -42,12 +51,55 @@ const RoomDetails = () => {
         }
     };
 
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(
+                "http://127.0.0.1:8000/api/bookrooms/",
+                formData
+            );
+
+            // Check if the response status is 201 Created (or another success status)
+            if (response.status === 201) {
+                // Show a success message to the user
+                setSuccessMessage("Submitted successfully!");
+
+                // Optionally, reset the form fields
+                setFormData({
+                    check_in: "",
+                    check_out: "",
+                    adults: "",
+                    children: "",
+                    bed_type: "",
+                    room_type: "",
+                });
+            } else {
+                // Handle other status codes (e.g., 400 for validation errors)
+                console.error(
+                    "Server responded with an unexpected status code:",
+                    response.status
+                );
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
+        }
+    };
+
     useEffect(() => {
         // Axios GET request to fetch data
         HomeData();
     }, []);
-    console.log(room);
-    console.log(room_1);
+    // console.log(room);
+    // console.log(room_1);
+    console.log(formData);
 
     const initialFormData = {
         checkIn: null,
@@ -64,35 +116,35 @@ const RoomDetails = () => {
 
 
     // Create state for form data
-    const [formData, setFormData] = useState(initialFormData);
+    // const [formData, setFormData] = useState(initialFormData);
     // Handle form input changes
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+    // const handleInputChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setFormData({ ...formData, [name]: value });
+    // };
     const handleDateChange = (name, date) => {
         setFormData({ ...formData, [name]: date });
     };
 
-    useEffect(() => {
-        if (formData.bedType === 'single') {
-            setPrice(data.singlePrice)
-        }
-        else if (formData.bedType === 'double') {
-            setPrice(data.doublePrice)
-        }
-    }, [formData.bedType])
+    // useEffect(() => {
+    //     if (formData.bedType === 'single') {
+    //         setPrice(data.singlePrice)
+    //     }
+    //     else if (formData.bedType === 'double') {
+    //         setPrice(data.doublePrice)
+    //     }
+    // }, [formData.bedType])
 
     // Handle form submission
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Send the formData to your backend for processing
-        // You can use an HTTP POST request to your server's API
-        console.log(formData);
-        alert("Form submitted successfully!")
-        // Reset the form to its initial state
-        setFormData(initialFormData);
-    };
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     // Send the formData to your backend for processing
+    //     // You can use an HTTP POST request to your server's API
+    //     console.log(formData);
+    //     alert("Form submitted successfully!")
+    //     // Reset the form to its initial state
+    //     setFormData(initialFormData);
+    // };
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -145,16 +197,20 @@ const RoomDetails = () => {
                         <button className='w-[35px] h-[35px] flex justify-center items-center bg-gray-200 rounded-full ms-auto mb-2' onClick={closeModal}><i className="fa-solid fa-xmark text-xl"></i></button>
                         <h2 className='lg:text-4xl sm:text-2xl text-xl font-semibold text-orange-500 sm:mb-2 mb-1 text-center'>Hotel Earth Light</h2>
                         <h3 className='lg:text-2xl sm:text-xl text-lg font-bold border-b-2 border-orange-500 sm:mb-2 mb-1 text-center'>Book Room</h3>
-
+                        {successMessage && (
+                            <div className="success-message" style={{ color: "green" }}>
+                                {successMessage}
+                            </div>
+                        )}
                         <form onSubmit={handleSubmit} className='flex w-full flex-col justify-between items-center gap-3'>
                             <div className='flex sm:flex-row flex-col gap-2 w-full'>
                                 <div className='flex flex-col items-start bg-white p-1 border border-black rounded-md w-full'>
                                     <label htmlFor="checkIn" className='text-[13px]'>Check-in:</label>
-                                    <Datetime id='checkIn' name='checkIn' value={formData.checkIn} onChange={(date) => handleDateChange('checkIn', date)} inputProps={{ placeholder: 'Select a date', className: "focus:outline-none placeholder:text-black w-full text-sm", required: 'required' }} className='w-full' />
+                                    <Datetime id='check_in' name='check_in' value={formData.check_in} onChange={(date) => handleDateChange('check_in', date)} inputProps={{ placeholder: 'Select a date', className: "focus:outline-none placeholder:text-black w-full text-sm", required: 'required' }} className='w-full' />
                                 </div>
                                 <div className='flex flex-col items-start bg-white p-1 border border-black rounded-md w-full'>
                                     <label htmlFor="checkOut" className='text-[13px]'>Check-out:</label>
-                                    <Datetime id='checkOut' name='checkOut' value={formData.checkOut} onChange={(date) => handleDateChange('checkOut', date)} inputProps={{ placeholder: 'Select a date', className: "focus:outline-none placeholder:text-black w-full text-sm", required: 'required' }} className='w-full' />
+                                    <Datetime id='check_out' name='check_out' value={formData.check_out} onChange={(date) => handleDateChange('check_out', date)} inputProps={{ placeholder: 'Select a date', className: "focus:outline-none placeholder:text-black w-full text-sm", required: 'required' }} className='w-full' />
                                 </div>
                             </div>
                             <div className='flex sm:flex-row flex-col gap-2 w-full'>
@@ -170,7 +226,7 @@ const RoomDetails = () => {
                             <div className='flex sm:flex-row flex-col gap-2 w-full'>
                                 <div className='flex flex-col items-start bg-white p-1 border border-black rounded-md w-full'>
                                     <label htmlFor="bedType" className='text-[13px]'>Bed Type:</label>
-                                    <select id="bedType" name="bedType" value={formData.bedType} onChange={handleInputChange} required className='focus:outline-none text-sm w-full' >
+                                    <select id="bed_type" name="bed_type" value={formData.bed_type} onChange={handleInputChange} required className='focus:outline-none text-sm w-full' >
                                         <option value="" disabled>Select bed type</option>
                                         <option value="single">Single</option>
                                         <option value="double">Double</option>
@@ -178,7 +234,7 @@ const RoomDetails = () => {
                                 </div>
                                 <div className='flex flex-col items-start bg-white p-1 border border-black rounded-md w-full'>
                                     <label htmlFor="roomType" className='text-[13px]'>Room Type:</label>
-                                    <input type="text" id='roomType' name='roomType' value={formData.roomType} onChange={handleInputChange} required className='focus:outline-none text-sm w-full' />
+                                    <input type="text" id='room_type' name='room_type' value={formData.room_type} onChange={handleInputChange} required className='focus:outline-none text-sm w-full' />
                                 </div>
                             </div>
                             <button type="submit" className='text-white bg-emerald-600 py-2 px-3 rounded-md hover:bg-orange-500'>SUBMIT</button>

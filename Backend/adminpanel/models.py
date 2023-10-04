@@ -36,8 +36,8 @@ class ContactUS(models.Model):
         return self.name
     
 class BookRoom(models.Model):
-    check_in = models.CharField(max_length=50,null=True)
-    check_out = models.CharField(max_length=50,null=True)
+    check_in = models.CharField(max_length=50, null=True)
+    check_out = models.CharField(max_length=50, null=True)
     adults = models.CharField(max_length=50,null=True)
     children = models.CharField(max_length=50,null=True)
     bed_type = models.CharField(max_length=50,null=True)
