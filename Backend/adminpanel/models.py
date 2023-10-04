@@ -58,7 +58,7 @@ class Newsletter(models.Model):
 class Navigation(models.Model):
     PAGE_TYPE = (
         ('Home', 'Home'),('Slider','Slider'),('Home/About', 'Home/About'),('Safari', 'Safari'),
-        ('Reviews', 'Reviews'),('About', 'About'),('Achievements', 'Achievements'),('Services', 'Services'),
+        ('Reviews', 'Reviews'),('About', 'About'),('Chart', 'Chart'),('Chart_1', 'Chart_1'),('Services', 'Services'),
         ('Services_1', 'Services_1'),('Features','Features'),('Rooms & Suites','Rooms & Suites'),
         ('Rooms & Suites_1','Rooms & Suites_1'),('Video_Gallery', 'Video_Gallery'),('Features_1','Features_1'),
         ('Video_Gallery_1', 'Video_Gallery_1'),('Image_Gallery', 'Image_Gallery'),('Features_2','Features_2'),

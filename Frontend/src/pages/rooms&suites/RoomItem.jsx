@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const RoomItem = ({ imageUrl, roomType, description, ac}) => {
+const RoomItem = ({ imageUrl, roomType, description, ac }) => {
     return (
         <div className='group shadow-[0_0_5px_2px_rgba(0,0,0,0.2)]'>
             <NavLink to={`/Rooms/${roomType} `} className='inline-block overflow-hidden w-full relative'>
@@ -12,7 +12,7 @@ const RoomItem = ({ imageUrl, roomType, description, ac}) => {
             <div className='p-3 flex flex-col items-start gap-1'>
                 <h3 className='sm:text-2xl text-xl font-semibold border-b-2 border-orange-500'>{roomType}</h3>
                 <b>AC: {ac}</b>
-                <p className='sm:text-base text-sm'>{description.substring(0, 100)}...</p>
+                <p className='sm:text-base text-sm' dangerouslySetInnerHTML={{ __html: description.substring(0, 100) }}></p>
             </div>
         </div>
     )

@@ -5,13 +5,49 @@ import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import Modal from 'react-modal';
 import ModalImage from "react-modal-image";
+import axios from 'axios';
 
 Modal.setAppElement('#root');
 
 const RoomDetails = () => {
     const [price, setPrice] = useState(0)
-    const { roomType } = useParams();
-    const data = RoomData.find((dataItem) => dataItem.roomType === roomType);
+    const { name } = useParams();
+    // const data = RoomData.find((dataItem) => dataItem.roomType === roomType);
+
+    const [room, setRoom] = useState();
+    const [room_1, setRoom_1] = useState();
+
+    const HomeData = async () => {
+        try {
+            const response = await axios.get(
+                "http://127.0.0.1:8000/api/navigations/"
+            );
+            // Filter the response data by status and page_type
+            if (response.data) {
+                const roomData = response.data.filter(
+                    (item) => item.status === "Publish" && item.page_type === "Rooms & Suites"
+                );
+                setRoom(roomData[0]); // Assuming you want to slice the filtered data
+            }
+
+            if (response.data) {
+                const room_1Data = response.data.filter(
+                    (item) => item.status === "Publish" && item.page_type === "Rooms & Suites_1"
+                );
+                setRoom_1(room_1Data.find(dataItem=> dataItem.name === name)); // Assuming you want to slice the filtered data
+            }
+
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    useEffect(() => {
+        // Axios GET request to fetch data
+        HomeData();
+    }, []);
+    console.log(room);
+    console.log(room_1);
 
     const initialFormData = {
         checkIn: null,
@@ -22,8 +58,8 @@ const RoomDetails = () => {
         roomType: '',
     };
 
-    if (roomType) {
-        initialFormData.roomType = roomType;
+    if (name) {
+        initialFormData.name = name;
     }
 
 
@@ -72,32 +108,32 @@ const RoomDetails = () => {
     return (
         <>
             <section className='h-[350px] relative'>
-                <img className='absolute h-full w-full inset-0 object-cover' src="/src/assets/images/contact-bg.webp" alt="background" />
+                <img className='absolute h-full w-full inset-0 object-cover' src={room && room.slider_image} alt="background" />
                 <div className='absolute h-full w-full inset-0 bg-black opacity-60'></div>
                 <div className='container text-white relative z-20 flex flex-col items-center justify-center h-full w-full'>
-                    <h1 className='lg:text-4xl md:text-3xl text-2xl font-semibold md:mt-[78px] mt-[40px] text-center'>Hotel Earth Light</h1>
+                    <h1 className='lg:text-4xl md:text-3xl text-2xl font-semibold md:mt-[78px] mt-[40px] text-center'>{room && room.caption}</h1>
                     <span className='flex text-lg text-gray-100'>
                         <NavLink to="/" className="relative px-2 after:absolute after:content-[''] after:h-[80%] after:top-[10%] after:w-[1px] after:bg-gray-100 after:right-0 hover:text-yellow-500">Home</NavLink>
                         <NavLink to="/Rooms" className="relative px-2 after:absolute after:content-[''] after:h-[80%] after:top-[10%] after:w-[1px] after:bg-gray-100 after:right-0 hover:text-yellow-500">Rooms</NavLink>
-                        <p className='px-2'>Room Details</p>
+                        <p className='px-2'>{room && room.title}</p>
                     </span>
                 </div>
             </section>
             <section className='py-10'>
                 <div className="container grid md:grid-cols-2 grid-cols-1 gap-5">
                     <div className='w-full md:rounded-ss-[70px] md:rounded-ee-[70px] md:rounded-none rounded-lg overflow-hidden my-auto'>
-                        <img className='w-full md:h-[400px] sm:h-[300px] h-[250px] object-cover custom-animation' src={data.imageUrl} alt={data.roomType} />
+                        <img className='w-full md:h-[400px] sm:h-[300px] h-[250px] object-cover custom-animation' src={room_1 && room_1.bannerimage} alt={room_1 && room_1.name} />
                     </div>
                     <div className='flex flex-col gap-1 items-start'>
-                        <h2 className='sm:text-2xl text-xl font-bold text-orange-500 mb-1'>{data.roomType}</h2>
-                        <b className='flex items-center gap-1'>Ac: <p className='text-orange-500'>{data.ac}</p></b>
-                        <b className='flex items-center gap-1'>Room Size: <p className='text-orange-500'>{data.roomSize}</p></b>
-                        <b className='flex items-center gap-1'>Wifi: <p className='text-orange-500'>{data.wifi}</p></b>
-                        <b className='flex items-center gap-1'>Single Bed: <p className='text-orange-500'>{data.singlePrice}</p></b>
-                        <b className='flex items-center gap-1'>Double Bed: <p className='text-orange-500'>{data.doublePrice}</p></b>
+                        <h2 className='sm:text-2xl text-xl font-bold text-orange-500 mb-1'>{room_1 && room_1.name}</h2>
+                        <b className='flex items-center gap-1'>Ac: <p className='text-orange-500'>{room_1 && room_1.caption}</p></b>
+                        <b className='flex items-center gap-1'>Room Size: <p className='text-orange-500'>{room_1 && room_1.icon_image}</p></b>
+                        <b className='flex items-center gap-1'>Wifi: <p className='text-orange-500'>{room_1 && room_1.title}</p></b>
+                        <b className='flex items-center gap-1'>Single Bed: <p className='text-orange-500'>{room_1 && room_1.meta_title}</p></b>
+                        <b className='flex items-center gap-1'>Double Bed: <p className='text-orange-500'>{room_1 && room_1.meta_keyword}</p></b>
                         <div className='bg-gray-100 p-2 flex flex-col items-start'>
                             <h3 className='sm:text-xl text-lg font-medium border-b-2 border-orange-500'>Description</h3>
-                            <p className=' text-gray-700 lg:text-base text-sm'>{data.description}</p>
+                            <p className=' text-gray-700 lg:text-base text-sm' dangerouslySetInnerHTML={{ __html: room_1 && room_1.short_desc }}></p>
                         </div>
                         <button onClick={openModal} className='text-white bg-emerald-600 py-2 px-3 rounded-md mt-1 hover:bg-orange-500'>Book Now</button>
                     </div>

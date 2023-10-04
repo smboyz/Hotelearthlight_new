@@ -183,9 +183,13 @@
                                                                             {% if data.page_type == "Reviews" %}selected="selected"{% endif %}>
                                                                         Reviews
                                                                     </option>
-                                                                    <option value="Achievements"
-                                                                            {% if data.page_type == "Achievements" %}selected="selected"{% endif %}>
-                                                                        Achievements
+                                                                    <option value="Chart"
+                                                                            {% if data.page_type == "Chart" %}selected="selected"{% endif %}>
+                                                                        Chart
+                                                                    </option>
+                                                                    <option value="Chart_1"
+                                                                            {% if data.page_type == "Chart_1" %}selected="selected"{% endif %}>
+                                                                        Chart_1
                                                                     </option>
                                                                     <option value="About"
                                                                             {% if data.page_type == "About" %}selected="selected"{% endif %}>
@@ -231,13 +235,16 @@
                                                                             {% if data.page_type == "Reviews_1" %}selected="selected"{% endif %}>
                                                                         Reviews_1
                                                                     </option>
-                                                                    <option value="Features_1" {% if data.page_type == "Features_1" %}selected="selected"{% endif %}>
+                                                                    <option value="Features_1"
+                                                                            {% if data.page_type == "Features_1" %}selected="selected"{% endif %}>
                                                                         Features_1
                                                                     </option>
-                                                                    <option value="Features_2" {% if data.page_type == "Features_2" %}selected="selected"{% endif %}>
+                                                                    <option value="Features_2"
+                                                                            {% if data.page_type == "Features_2" %}selected="selected"{% endif %}>
                                                                         Features_2
                                                                     </option>
-                                                                    <option value="Features_3" {% if data.page_type == "Features_3" %}selected="selected"{% endif %}>
+                                                                    <option value="Features_3"
+                                                                            {% if data.page_type == "Features_3" %}selected="selected"{% endif %}>
                                                                         Features_3
                                                                     </option>
                                                                     {% comment %} <option value="UNSKILLED" {% if data.page_type == "UNSKILLED" %}selected="selected"{% endif %}>
