@@ -8,6 +8,9 @@ const ImageGallery = () => {
 
     const [gall, setGall] = useState();
     const [gall_1, setGall_1] = useState();
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8; // Number of items to display per page
+    const [Pages, setTotalPages] = useState(1);
 
     const HomeData = async () => {
         try {
@@ -15,6 +18,7 @@ const ImageGallery = () => {
                 "http://127.0.0.1:8000/api/navigations/"
             );
             // Filter the response data by status and page_type
+            
             if (response.data) {
                 const gallData = response.data.filter(
                     (item) => item.status === "Publish" && item.page_type === "Image_Gallery"
@@ -23,10 +27,25 @@ const ImageGallery = () => {
             }
 
             if (response.data) {
+
                 const gall_1Data = response.data.filter(
                     (item) => item.status === "Publish" && item.page_type === "Image_Gallery_1"
                 );
-                setGall_1(gall_1Data); // Assuming you want to slice the filtered data
+
+                // Calculate the total number of pages based on the items per page
+                setTotalPages(Math.ceil(gall_1Data.length / itemsPerPage));
+
+                // Calculate the start and end indices for the current page
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+
+                // Slice the data to display only the items for the current page
+                const paginatedGall_1Data = gall_1Data.slice(
+                    startIndex,
+                    endIndex
+                );
+
+                setGall_1(paginatedGall_1Data); // Assuming you want to slice the filtered data
             }
 
         } catch (error) {
@@ -37,7 +56,7 @@ const ImageGallery = () => {
     useEffect(() => {
         // Axios GET request to fetch data
         HomeData();
-    }, []);
+    }, [currentPage]);
     // console.log(gall_1);
 
     return (
@@ -61,18 +80,35 @@ const ImageGallery = () => {
                             <ImageModal key={imageItem.id} imageUrl={imageItem.bannerimage} images={gall_1} index={index} />
                         ))}
                     </div>
-                    <nav className="flex items-center space-x-2">
-                        <a className="text-gray-400 hover:text-blue-600 p-4 inline-flex items-center gap-2 rounded-md pointer-events-none" href="#">
+                    <nav className="flex justify-center items-center space-x-2 pt-8">
+                        <button
+                            className="text-gray-500 hover:text-blue-600 p-4 inline-flex items-center gap-2 rounded-md"
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                            disabled={currentPage === 1}
+                        >
                             <span aria-hidden="true">«</span>
-                            <span>Previous</span>
-                        </a>
-                        <a className="w-10 h-10 bg-blue-500 text-white p-4 inline-flex items-center text-sm font-medium rounded-full" href="#" aria-current="page">1</a>
-                        <a className="w-10 h-10 text-gray-500 hover:text-blue-600 p-4 inline-flex items-center text-sm font-medium rounded-full" href="#">2</a>
-                        <a className="w-10 h-10 text-gray-500 hover:text-blue-600 p-4 inline-flex items-center text-sm font-medium rounded-full" href="#">3</a>
-                        <a className="text-gray-500 hover:text-blue-600 p-4 inline-flex items-center gap-2 rounded-md" href="#">
-                            <span>Next</span>
+                            <span className="sr-only">Previous</span>
+                        </button>
+                        {Array.from({ length: Pages }).map((_, index) => (
+                            <button
+                                key={index + 1}
+                                className={`w-10 h-10 ${currentPage === index + 1
+                                    ? "bg-blue-500 text-white"
+                                    : "text-gray-500 hover:text-blue-600"
+                                    } p-4 inline-flex items-center text-sm font-medium rounded-full`}
+                                onClick={() => setCurrentPage(index + 1)}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                        <button
+                            className="text-gray-500 hover:text-blue-600 p-4 inline-flex items-center gap-2 rounded-md"
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                            disabled={currentPage === Pages}
+                        >
+                            <span className="sr-only">Next</span>
                             <span aria-hidden="true">»</span>
-                        </a>
+                        </button>
                     </nav>
                 </div>
             </section>

@@ -201,7 +201,7 @@ const RoomDetails = () => {
             </section>
             <section>
                 <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className='h-full w-full flex justify-center items-center'>
-                    <div className='xl:w-1/2 lg:w-8/12 w-10/12 bg-white py-4 px-10 shadow-[0_0_10px_2px_rgba(0,0,0,0.2)] flex flex-col items-center'>
+                    <div className='xl:w-1/2 lg:w-8/12 w-10/12 bg-white py-2 px-10 shadow-[0_0_10px_2px_rgba(0,0,0,0.2)] flex flex-col items-center'>
                         <button className='w-[35px] h-[35px] flex justify-center items-center bg-gray-200 rounded-full ms-auto mb-2' onClick={closeModal}><i className="fa-solid fa-xmark text-xl"></i></button>
                         <h2 className='lg:text-4xl sm:text-2xl text-xl font-semibold text-orange-500 sm:mb-2 mb-1 text-center'>{data && data.SiteName}</h2>
                         <h3 className='lg:text-2xl sm:text-xl text-lg font-bold border-b-2 border-orange-500 sm:mb-2 mb-1 text-center'>Book Room</h3>
@@ -210,7 +210,7 @@ const RoomDetails = () => {
                                 {successMessage}
                             </div>
                         )}
-                        <form onSubmit={handleSubmit} className='flex w-full flex-col justify-between items-center gap-3'>
+                        <form onSubmit={handleSubmit} className='flex w-full flex-col justify-between items-center gap-2'>
                             <div className='flex sm:flex-row flex-col gap-2 w-full'>
                                 <div className='flex flex-col items-start bg-white p-1 border border-black rounded-md w-full'>
                                     <label htmlFor="checkIn" className='text-[13px]'>Check-in:</label>
