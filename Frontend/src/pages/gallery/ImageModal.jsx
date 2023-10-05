@@ -46,7 +46,7 @@ const ImageModal = (props) => {
     return (
         <>
             <div className='shadow-[0_0_5px_2px_rgba(0,0,0,0.1)]' onClick={openModal} data-aos="zoom-in" data-aos-duration="1000" data-aos-once='true'>
-                <img className='w-full h-full' src={imageUrl} alt="Image" />
+                <img className='w-full h-[250px] object-cover' src={imageUrl} alt="Image" />
             </div>
             <ReactModal isOpen={modalIsOpen} onRequestClose={closeModal}>
                 <span onClick={closeModal} className='fixed z-[1000] top-[30px] right-[30px] text-xl h-[30px] w-[30px] rounded-full bg-black text-white flex justify-center items-center'>

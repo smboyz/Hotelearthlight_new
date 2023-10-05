@@ -16,6 +16,7 @@ const RoomDetails = () => {
 
     const [room, setRoom] = useState();
     const [room_1, setRoom_1] = useState();
+    const [data, setData] = useState();
     const [formData, setFormData] = useState({
         check_in: "",
         check_out: "",
@@ -24,10 +25,17 @@ const RoomDetails = () => {
         bed_type: "",
         room_type: "",
     });
+    if (name) {
+        formData.room_type = name;
+    }
     const [successMessage, setSuccessMessage] = useState("")
 
     const HomeData = async () => {
         try {
+            const response_1 = await axios.get('http://127.0.0.1:8000/api/globals/');
+            // Handle the response data here
+            response_1.data && setData(response_1.data[0]);
+
             const response = await axios.get(
                 "http://127.0.0.1:8000/api/navigations/"
             );
@@ -126,14 +134,14 @@ const RoomDetails = () => {
         setFormData({ ...formData, [name]: date });
     };
 
-    // useEffect(() => {
-    //     if (formData.bedType === 'single') {
-    //         setPrice(data.singlePrice)
-    //     }
-    //     else if (formData.bedType === 'double') {
-    //         setPrice(data.doublePrice)
-    //     }
-    // }, [formData.bedType])
+    useEffect(() => {
+        if (formData.bed_type === 'single') {
+            setPrice(room_1.meta_title)
+        }
+        else if (formData.bed_type === 'double') {
+            setPrice(room_1.meta_keyword)
+        }
+    }, [formData.bed_type])
 
     // Handle form submission
     // const handleSubmit = (e) => {
@@ -195,7 +203,7 @@ const RoomDetails = () => {
                 <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className='h-full w-full flex justify-center items-center'>
                     <div className='xl:w-1/2 lg:w-8/12 w-10/12 bg-white py-4 px-10 shadow-[0_0_10px_2px_rgba(0,0,0,0.2)] flex flex-col items-center'>
                         <button className='w-[35px] h-[35px] flex justify-center items-center bg-gray-200 rounded-full ms-auto mb-2' onClick={closeModal}><i className="fa-solid fa-xmark text-xl"></i></button>
-                        <h2 className='lg:text-4xl sm:text-2xl text-xl font-semibold text-orange-500 sm:mb-2 mb-1 text-center'>Hotel Earth Light</h2>
+                        <h2 className='lg:text-4xl sm:text-2xl text-xl font-semibold text-orange-500 sm:mb-2 mb-1 text-center'>{data && data.SiteName}</h2>
                         <h3 className='lg:text-2xl sm:text-xl text-lg font-bold border-b-2 border-orange-500 sm:mb-2 mb-1 text-center'>Book Room</h3>
                         {successMessage && (
                             <div className="success-message" style={{ color: "green" }}>
@@ -240,7 +248,7 @@ const RoomDetails = () => {
                             <button type="submit" className='text-white bg-emerald-600 py-2 px-3 rounded-md hover:bg-orange-500'>SUBMIT</button>
                         </form>
                         <div className='w-full flex flex-col items-center'>
-                            <ModalImage className='sm:w-[200px] w-[120px] sm:h-[200px] h-[120px]' small='/src/assets/images/qr-code.png' large='/src/assets/images/qr-code.png' alt="qr code" />
+                            <ModalImage className='sm:w-[200px] w-[120px] sm:h-[200px] h-[120px]' small={data && data.qr_code} large={data && data.qr_code} alt="qr code" />
                             <p className='sm:text-xl text-lg font-semibold text-center'>Price:{price}</p>
                             <p className='text-center'>QR code for payment</p>
                         </div>

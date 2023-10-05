@@ -45,11 +45,8 @@ const HotelChar = () => {
         <section
             style={{
                 backgroundImage: `url(${chart && chart.slider_image})`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-                backgroundAttachment: 'fixed',
             }}
-            className="py-14 flex items-center relative"
+            className={`py-14 flex items-center relative bg-fixed bg-no-repeat bg-cover`}
         >
             <div className='absolute w-full h-full inset-0 bg-black opacity-60'></div>
             <div className="container relative w-full z-20 text-white">
