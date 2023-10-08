@@ -7,9 +7,27 @@ from .models import GlobalSettings, ContactUS, Navigation, BookRoom, Newsletter
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.paginator import Paginator
+from django.views.generic import View
+import os
 # from .models import Apply
 
 
+class ReactAppView(View):
+
+    def get(self, request):
+        try:
+
+            with open(os.path.join(settings.REACT_APP, 'dist', 'index.html')) as file:
+                return HttpResponse(file.read())
+
+        except :
+            return HttpResponse(
+                """
+                index.html not found ! build your React app !!
+                """,
+                status=501,
+            )
+        
 def admin_login(request):
     glob = GlobalSettings.objects.all()
     try:
