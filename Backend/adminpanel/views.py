@@ -412,4 +412,4 @@ def delete_news(request):
                 con = get_object_or_404(Newsletter, pk=item_pk)
                 con.delete()
 
-    return redirect('newslett')
+    return redirect('newletter')

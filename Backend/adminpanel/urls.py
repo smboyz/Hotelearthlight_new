@@ -18,5 +18,6 @@ urlpatterns = [
     path("bookrooms/", Bookroom, name="bookrooms"),
     path("delete_BookRoom/", delete_BookRoom, name="delete_BookRoom"),
     path("newletter/", newsletter, name="newletter"),
+    path("delete_news/", delete_news, name="delete_news"),
     # path('search/', search_results, name='search')
 ]
